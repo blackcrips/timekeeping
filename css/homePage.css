@@ -1,0 +1,159 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.container-body .container-header {
+    width: 20%;
+    padding-top: 20px;
+    background-color: #eee;
+    height: 100vh;
+}
+
+.container-body .container-header .header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-body .container-header .header-content .profile-photo {
+    width: 90%;
+    max-height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #000000;
+}
+.container-body .container-header .header-content .profile-photo img {
+    width: 80%;
+    border-radius: 50%;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.container-body .container-header .header-content .container-leave {
+    width: 90%;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.container-body .container-header .header-content .container-leave .remaining-vl {
+    margin-bottom: 5px;
+}
+.container-body .container-header .header-content .timekeeping-actions {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.container-time-in,
+.container-first-break,
+.container-second-break,
+.container-timeout {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.timein,
+.timeout,
+.first-break,
+.first-end-break,
+.second-break,
+.second-end-break {
+    border-radius: 5px;
+    font-size: 14px;
+    width: 120px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    font-weight: bold;
+    background-color: #F66B0E;
+}
+
+.first-break,
+.second-break {
+    margin-right: 5px;
+}
+
+.container-body .right-details {
+    width: 80%;
+    overflow: scroll;
+} 
+
+.container-body .right-details .right-header {
+    width: 100%;
+}
+
+.container-body .right-details .right-header .ul-nav {
+    display: flex;
+    width: 100%;
+    background-color: #F66B0E;
+    padding-left: 0;
+}
+
+.container-body .right-details .right-header .ul-nav .logout {
+    position: absolute;
+    right: 0;
+    border-left: 1px solid #eee;
+    height: 36px;
+}
+
+.container-body .right-details .right-header .ul-nav .logout form {
+    height: 100%;
+    margin-right: 16px;
+}
+
+
+.container-body .right-details .right-header .ul-nav .logout form button:hover {
+    cursor: pointer;
+}
+
+    
+.container-body .right-details .right-header .ul-nav .logout form button {
+    width: 100%;
+    background-color: transparent;
+    font-size: 18px;
+    border: none;
+    height: 100%;
+}
+
+.container-body .right-details .right-header .ul-nav li {
+    list-style: none;
+    width: 12%;
+    border-right: 1px solid #eee;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.container-body .right-details .right-header .ul-nav li:hover {
+    cursor: pointer;
+}
+
+.container-body .right-details .right-header .ul-nav li div {
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+
+.container-body .right-details .right-header .container-content {
+    padding: 0px 10px 0 10px;
+}
+
+.container-body .right-details .right-header .container-content .content-title {
+    margin-bottom: 10px;
+}
+
+.container-body .right-details .right-header .container-content .container-table {
+    border: 1px solid #eee;
+    padding: 15px;
+}
