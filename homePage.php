@@ -19,6 +19,7 @@ $controller->redirectForeignUser();
 </head>
 <body>
     <div class="container-body">
+        <div class="alert alert-primary" role="alert"></div>
         <?php include_once('header.php'); ?>
         <div class="right-details">
             <div class="right-header">
@@ -65,7 +66,7 @@ $controller->redirectForeignUser();
             </div>
         </div>
     </div>
-
+        <?php include_once('footer.php'); ?>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>

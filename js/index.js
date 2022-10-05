@@ -5,6 +5,11 @@ let validationMessage = $('#validation-message');
 checkEmpty();
 emptyValidationMessage();
 
+$('.forgot-password').click(function()
+{
+    window.location.href = "forgotPassword.php";
+});
+
 function checkEmpty()
 {
     $('#submit').click(function(e) {

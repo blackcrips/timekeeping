@@ -9,18 +9,18 @@
         </div>
         <div class="timekeeping-actions">
             <div class="container-time-in">
-                <div class="timein">Time in</div>
+                <div class="timein action">Time in</div>
             </div>
             <div class="container-first-break">
-                <div class="first-break">First Break In</div>
-                <div class="first-end-break">First End Break</div>
+                <div class="first-break action">First Break In</div>
+                <div class="first-end-break action">First End Break</div>
             </div>
             <div class="container-second-break">
-                <div class="second-break">Second Break In</div>
-                <div class="second-end-break">Second End Break</div>
+                <div class="second-break action">Second Break In</div>
+                <div class="second-end-break action">Second End Break</div>
             </div>
             <div class="container-timeout">
-                <div class="timeout">Timeout</div>
+                <div class="timeout action">Timeout</div>
             </div>
         </div>
     </div>
