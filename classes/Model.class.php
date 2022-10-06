@@ -1,5 +1,6 @@
 <?php
 
+use LDAP\Result;
 
 class Model extends Dbh
 {
@@ -38,5 +39,23 @@ class Model extends Dbh
         $stmt->execute([$email]);
         $result = $stmt->fetch();
         return $result;
+    }
+
+    public function getAction($email)
+    {
+        $sql = "SELECT * FROM timekeeping_action WHERE email = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$email]);
+
+        $results = $stmt->fetchAll();
+
+        foreach ($results as $key => $value) {
+            $createDate = date_create($value['added_at']);
+            $formatDate = date_format($createDate,"Y-m-d");        
+
+            if($formatDate == date('Y-m-d')){
+                return $value;
+            }
+        }
     }
 }

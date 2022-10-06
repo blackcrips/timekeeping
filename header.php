@@ -20,7 +20,7 @@
                 <div class="second-end-break action">Second End Break</div>
             </div>
             <div class="container-timeout">
-                <div class="timeout action">Timeout</div>
+                <div class="timeout action">Time out</div>
             </div>
         </div>
     </div>

@@ -195,6 +195,38 @@ class  Controller extends Model
 
     }
 
+    public function checkLastTimekeepingAction()
+    {
+        var_dump($this->getAction($_SESSION['login-details']['user-email']));
+    }
+
+    public function timekeepingAction()
+    {
+        if(!isset($_POST['action'])){
+            header("LOCATION: ../");
+            exit();
+        }
+
+        if(!isset($_SESSION)){
+            session_start();
+        }
+
+        $actionValue = strtolower(str_replace(" ","_",$_POST['action']));
+        $email = $_SESSION['login-details']['user-email'];
+        
+        exit(json_encode($email));
+    }
+
+
+
+
+
+
+
+
+
+
+
     // Function template for SMTP while waiting for other way to send google mail
 
     private function phpMailer($validEmail)

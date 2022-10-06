@@ -9,7 +9,7 @@ $(document).ready(function(){
             $('.alert-primary').css('top',0);
             $('.alert-primary').html();
             setTimeout(fadeAlertOut,3000);
-
+            timekeepingAction($(this).html());
         });
     })
 });
@@ -18,4 +18,20 @@ $(document).ready(function(){
 function fadeAlertOut()
 {
     $('.alert-primary').css('top','-15%');
+}
+
+function timekeepingAction(action)
+{
+    $.ajax(
+        {
+            type: "POST",
+            url: "./includes/timekeepingAction.inc.php",
+            data: {"action": action},
+            success: function(data)
+            {
+                // window.location.href = "./includes/timekeepingAction.inc.php"
+                console.log(data);
+            }
+        }
+    );
 }
