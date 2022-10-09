@@ -35,3 +35,36 @@ function timekeepingAction(action)
         }
     );
 }
+
+checkLastTimekeepingAction();
+
+function checkLastTimekeepingAction()
+{
+    $.ajax(
+        {
+            type: "POST",
+            url: "./includes/dynamicCheck.inc.php",
+            data: {'request-value': true},
+            success: function(data){
+                let selector = data.replaceAll(`_`,"-");
+                let selector2 = selector.replaceAll(`"`,"");
+                compareValue(selector2);
+            },
+            error: function(request){
+                console.log(request.responseText);
+            }
+        }
+    );
+}
+
+function compareValue(selector)
+{
+    $('.action').each(function(index,element){
+        let thisClass = $(this).attr('class').split(" ");                    
+        if(selector == thisClass[0]){
+            $(this).attr('disabled',false);
+            return;
+            // console.log(true);
+        }
+    });
+}

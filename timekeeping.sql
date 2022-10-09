@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2022 at 03:15 AM
+-- Generation Time: Oct 09, 2022 at 06:09 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `timekeeping`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timekeeping_action`
+--
+
+CREATE TABLE `timekeeping_action` (
+  `int` int(10) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `time_in` varchar(250) NOT NULL,
+  `first_break_in` varchar(250) NOT NULL,
+  `first_end_break` varchar(250) NOT NULL,
+  `second_break_in` varchar(250) NOT NULL,
+  `second_end_break` varchar(250) NOT NULL,
+  `time_out` varchar(250) NOT NULL,
+  `date_action` date NOT NULL DEFAULT current_timestamp(),
+  `added_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `timekeeping_action`
+--
+
+INSERT INTO `timekeeping_action` (`int`, `email`, `time_in`, `first_break_in`, `first_end_break`, `second_break_in`, `second_end_break`, `time_out`, `date_action`, `added_at`) VALUES
+(1, 'admin@email.com', 'active', '', '', '3', '', '', '2022-10-08', '2022-10-07 00:00:00'),
+(2, 'admin@email.com', '', '', '', '', '', '', '2022-10-08', '2022-10-08 00:23:40');
 
 -- --------------------------------------------------------
 
@@ -78,7 +105,17 @@ INSERT INTO `user_action` (`id`, `username`, `device`, `ip_address`, `location`,
 (13, '', 'Desktop', '::1', 'private', '', '2022-09-29 00:36:10'),
 (14, '', 'Desktop', '::1', 'private', '', '2022-09-29 00:37:19'),
 (15, '', 'Desktop', '::1', 'private', '', '2022-09-29 00:38:24'),
-(16, '', 'Mobile', '192.168.100.4', 'private', '', '2022-09-29 08:50:05');
+(16, '', 'Mobile', '192.168.100.4', 'private', '', '2022-09-29 08:50:05'),
+(17, '', 'Desktop', '::1', 'private', '', '2022-09-29 09:30:16'),
+(18, '', 'Desktop', '::1', 'private', '', '2022-09-29 22:55:06'),
+(19, '', 'Desktop', '::1', 'private', '', '2022-09-29 22:56:01'),
+(20, '', 'Desktop', '::1', 'private', '', '2022-09-30 22:12:46'),
+(21, '', 'Desktop', '::1', 'private', '', '2022-10-05 22:49:32'),
+(22, '', 'Desktop', '::1', 'private', '', '2022-10-06 23:00:05'),
+(23, '', 'Desktop', '::1', 'private', '', '2022-10-06 23:05:58'),
+(24, '', 'Desktop', '::1', 'private', '', '2022-10-07 22:13:51'),
+(25, '', 'Desktop', '::1', 'private', '', '2022-10-08 15:34:29'),
+(26, '', 'Desktop', '::1', 'private', '', '2022-10-08 15:36:07');
 
 -- --------------------------------------------------------
 
@@ -110,6 +147,12 @@ INSERT INTO `user_details` (`id`, `firstname`, `middlename`, `lastname`, `emp_no
 --
 
 --
+-- Indexes for table `timekeeping_action`
+--
+ALTER TABLE `timekeeping_action`
+  ADD PRIMARY KEY (`int`);
+
+--
 -- Indexes for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
@@ -132,6 +175,12 @@ ALTER TABLE `user_details`
 --
 
 --
+-- AUTO_INCREMENT for table `timekeeping_action`
+--
+ALTER TABLE `timekeeping_action`
+  MODIFY `int` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
@@ -141,7 +190,7 @@ ALTER TABLE `user_accounts`
 -- AUTO_INCREMENT for table `user_action`
 --
 ALTER TABLE `user_action`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user_details`

@@ -197,7 +197,31 @@ class  Controller extends Model
 
     public function checkLastTimekeepingAction()
     {
-        var_dump($this->getAction($_SESSION['login-details']['user-email']));
+        if(!isset($_SESSION)){
+            session_start();
+        }
+
+        $callback = $this->getAction($_SESSION['login-details']['user-email']);
+        
+        $arrayAction = [    
+        "time_in" => $callback['time_in'],
+        "first_break_in" => $callback['first_break_in'],
+        'first_end_break' => $callback['first_end_break'],
+        'second_break_in' => $callback['second_break_in'],
+        'second_end_break' => $callback['second_end_break'],
+        'time_out' => $callback['time_out']
+        ];
+
+        foreach ($arrayAction as $key => $value) {
+            if($value == ""){
+                exit(json_encode($key));
+            }
+        }
+        // for($i = 0; $i < count($arrayAction);$i++){
+        //     if($arrayAction[$i] != ""){
+        //         exit(json_encode($arrayAction[$i]));
+        //     }
+        // }
     }
 
     public function timekeepingAction()

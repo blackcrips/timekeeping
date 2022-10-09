@@ -64,11 +64,11 @@
     margin-bottom: 5px;
 }
 
-.timein,
-.timeout,
-.first-break,
+.time-in,
+.time-out,
+.first-break-in,
 .first-end-break,
-.second-break,
+.second-break-in,
 .second-end-break {
     border-radius: 5px;
     font-size: 14px;
@@ -78,20 +78,21 @@
     line-height: 70px;
     font-weight: bold;
     background-color: #F66B0E;
+    border: none;
 }
 
-.timein:hover,
-.timeout:hover,
-.first-break:hover,
+.time-in:hover,
+.time-out:hover,
+.first-break-in:hover,
 .first-end-break:hover,
-.second-break:hover,
+.second-break-in:hover,
 .second-end-break:hover {
     cursor: pointer;
     box-shadow: 0 0 10px black;
 }
 
-.first-break,
-.second-break {
+.first-break-in,
+.second-break-in {
     margin-right: 5px;
 }
 

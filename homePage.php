@@ -48,7 +48,6 @@ $controller->redirectForeignUser();
                         <h2>Last timekeeping activity</h2>
                     </div>
                     <div class="container-table">
-                        <?php $controller->checkLastTimekeepingAction(); ?>
                         <table class="table active table-bordered table-striped table-hover" id="data-table">
                             <thead>
                                 <tr>
