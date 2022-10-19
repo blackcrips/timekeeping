@@ -202,26 +202,26 @@ class  Controller extends Model
         }
 
         $callback = $this->getAction($_SESSION['login-details']['user-email']);
-        
-        $arrayAction = [    
-        "time_in" => $callback['time_in'],
-        "first_break_in" => $callback['first_break_in'],
-        'first_end_break' => $callback['first_end_break'],
-        'second_break_in' => $callback['second_break_in'],
-        'second_end_break' => $callback['second_end_break'],
-        'time_out' => $callback['time_out']
-        ];
 
-        foreach ($arrayAction as $key => $value) {
-            if($value == ""){
-                exit(json_encode($key));
+        if(!$callback || $callback == null){
+            exit(json_encode(false));
+        } else {
+            
+            $arrayAction = [    
+                "time_in" => $callback['time_in'],
+                "first_break_in" => $callback['first_break_in'],
+                'first_end_break' => $callback['first_end_break'],
+                'second_break_in' => $callback['second_break_in'],
+                'second_end_break' => $callback['second_end_break'],
+                'time_out' => $callback['time_out']
+            ];
+            
+            foreach ($arrayAction as $key => $value) {
+                if($value == ""){
+                    exit(json_encode($key));
+                }
             }
         }
-        // for($i = 0; $i < count($arrayAction);$i++){
-        //     if($arrayAction[$i] != ""){
-        //         exit(json_encode($arrayAction[$i]));
-        //     }
-        // }
     }
 
     public function timekeepingAction()
@@ -231,14 +231,19 @@ class  Controller extends Model
             exit();
         }
 
+        date_default_timezone_set('Asia/Manila');
+
         if(!isset($_SESSION)){
             session_start();
         }
 
         $actionValue = strtolower(str_replace(" ","_",$_POST['action']));
         $email = $_SESSION['login-details']['user-email'];
+        $time = date('h:i:s');
+        $removeQuote = str_replace(`"`,"",$email);
         
-        exit(json_encode($email));
+        $this->updateAction($actionValue,$time,$email);
+        exit(json_encode($this->getAction($email)));
     }
 
 

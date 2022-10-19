@@ -12,7 +12,8 @@
 .container-body .container-header {
     width: 20%;
     padding-top: 20px;
-    background-color: #eee;
+    background-color: #1746A2;
+    border-right: 1px solid #ccc;
     height: 96vh;
 }
 
@@ -44,6 +45,7 @@
     width: 90%;
     margin-top: 5px;
     font-weight: bold;
+    color: #ffffff;
 }
 
 .container-body .container-header .header-content .container-leave .remaining-vl {
@@ -71,13 +73,12 @@
 .second-break-in,
 .second-end-break {
     border-radius: 5px;
-    font-size: 14px;
+    font-size: .8em;
     width: 120px;
     height: 70px;
     text-align: center;
     line-height: 70px;
     font-weight: bold;
-    background-color: #F66B0E;
     border: none;
 }
 
@@ -88,7 +89,7 @@
 .second-break-in:hover,
 .second-end-break:hover {
     cursor: pointer;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 50px inset #5F9DF7;
 }
 
 .first-break-in,
@@ -108,7 +109,7 @@
 .container-body .right-details .right-header .ul-nav {
     display: flex;
     width: 100%;
-    background-color: #F66B0E;
+    background-color: #FFF7E9;
     padding-left: 0;
 }
 

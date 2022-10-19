@@ -15,6 +15,7 @@ $(document).ready(function(){
 });
 
 
+
 function fadeAlertOut()
 {
     $('.alert-primary').css('top','-15%');
@@ -29,8 +30,11 @@ function timekeepingAction(action)
             data: {"action": action},
             success: function(data)
             {
-                // window.location.href = "./includes/timekeepingAction.inc.php"
-                console.log(data);
+                let dataCallback = data.replaceAll(`_`,`-`);
+                let replaceQuote = dataCallback.replaceAll(`"`,"");
+                compareValue(replaceQuote,'false');
+                checkLastTimekeepingAction();
+                console.log(data)
             }
         }
     );
@@ -46,25 +50,28 @@ function checkLastTimekeepingAction()
             url: "./includes/dynamicCheck.inc.php",
             data: {'request-value': true},
             success: function(data){
-                let selector = data.replaceAll(`_`,"-");
-                let selector2 = selector.replaceAll(`"`,"");
-                compareValue(selector2);
+                if(!data || data == 'false'){
+                    $('.time-in').attr('disabled',false);
+                } else {
+                    let selector = data.replaceAll(`_`,"-");
+                    let selector2 = selector.replaceAll(`"`,"");
+                    compareValue(selector2,'true');
+                }
             },
             error: function(request){
                 console.log(request.responseText);
             }
         }
-    );
+        );
 }
 
-function compareValue(selector)
+function compareValue(selector,bool)
 {
     $('.action').each(function(index,element){
         let thisClass = $(this).attr('class').split(" ");                    
         if(selector == thisClass[0]){
-            $(this).attr('disabled',false);
+            $(this).attr('disabled',bool);
             return;
-            // console.log(true);
         }
     });
 }

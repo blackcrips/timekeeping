@@ -41,7 +41,7 @@ class Model extends Dbh
         return $result;
     }
 
-    public function getAction($email)
+    protected function getAction($email)
     {
         $sql = "SELECT * FROM timekeeping_action WHERE email = ?";
         $stmt = $this->connect()->prepare($sql);
@@ -58,4 +58,12 @@ class Model extends Dbh
             }
         }
     }
+
+    protected function updateAction($action,$time,$email)
+    {
+        $sql = "UPDATE timekeeping_action SET $action = ? WHERE `email` = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$time,$email]);
+    }
+    
 }
