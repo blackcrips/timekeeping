@@ -41,29 +41,22 @@ class Model extends Dbh
         return $result;
     }
 
-    protected function getAction($email)
+    protected function tkeep_history($email,$actionData)
     {
-        $sql = "SELECT * FROM timekeeping_action WHERE email = ?";
+        $sql = "INSERT INTO tkeep_history (`email`, `action_data`) VALUES (?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$email,$actionData]);
+        // exit(0);
+    }
+
+    protected function getLastTkeepAction($email)
+    {
+        $sql = "SELECT action_data FROM tkeep_history WHERE email = ? ORDER BY id DESC";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$email]);
 
-        $results = $stmt->fetchAll();
+        $result = $stmt->fetch();
 
-        foreach ($results as $key => $value) {
-            $createDate = date_create($value['added_at']);
-            $formatDate = date_format($createDate,"Y-m-d");        
-
-            if($formatDate == date('Y-m-d')){
-                return $value;
-            }
-        }
+        return $result;
     }
-
-    protected function updateAction($action,$time,$email)
-    {
-        $sql = "UPDATE timekeeping_action SET $action = ? WHERE `email` = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$time,$email]);
-    }
-    
 }

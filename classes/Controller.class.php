@@ -195,55 +195,17 @@ class  Controller extends Model
 
     }
 
-    public function checkLastTimekeepingAction()
+    public function addActionHistory($actionRequest)
     {
         if(!isset($_SESSION)){
             session_start();
         }
 
-        $callback = $this->getAction($_SESSION['login-details']['user-email']);
-
-        if(!$callback || $callback == null){
-            exit(json_encode(false));
-        } else {
-            
-            $arrayAction = [    
-                "time_in" => $callback['time_in'],
-                "first_break_in" => $callback['first_break_in'],
-                'first_end_break' => $callback['first_end_break'],
-                'second_break_in' => $callback['second_break_in'],
-                'second_end_break' => $callback['second_end_break'],
-                'time_out' => $callback['time_out']
-            ];
-            
-            foreach ($arrayAction as $key => $value) {
-                if($value == ""){
-                    exit(json_encode($key));
-                }
-            }
-        }
-    }
-
-    public function timekeepingAction()
-    {
-        if(!isset($_POST['action'])){
-            header("LOCATION: ../");
-            exit();
-        }
-
-        date_default_timezone_set('Asia/Manila');
-
-        if(!isset($_SESSION)){
-            session_start();
-        }
-
-        $actionValue = strtolower(str_replace(" ","_",$_POST['action']));
         $email = $_SESSION['login-details']['user-email'];
-        $time = date('h:i:s');
-        $removeQuote = str_replace(`"`,"",$email);
-        
-        $this->updateAction($actionValue,$time,$email);
-        exit(json_encode($this->getAction($email)));
+        $actionData = htmlspecialchars($actionRequest);
+
+        $this->tkeep_history($email,$actionData);
+        exit(json_encode($this->getLastTkeepAction($email)));
     }
 
 
