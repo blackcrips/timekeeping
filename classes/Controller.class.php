@@ -195,6 +195,25 @@ class  Controller extends Model
 
     }
 
+    public function fetchLastTkeepAction()
+    {
+        if(!isset($_SESSION)){
+            session_start();
+        }
+
+        $userLogin = $_SESSION['login-details']['user-email'];
+
+        $lastAction = $this->getLastTkeepAction($userLogin);
+
+        if($lastAction['action_data'] == '' || is_null($lastAction['action_data']) == 1){
+            exit(json_encode('No data'));
+        } else {
+            exit(json_encode($lastAction['action_data']));
+        }
+
+        
+    }
+
     public function addActionHistory($actionRequest)
     {
         if(!isset($_SESSION)){

@@ -5,6 +5,7 @@ date_default_timezone_set('Asia/Manila');
 $controller = new Controller();
 $controller->redirectForeignUser();
 
+
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +18,10 @@ $controller->redirectForeignUser();
 </head>
 <body>
     <div class="container_actions">
-        <button class='time_in tkeep_action'>Time In</button>
-        <button class='break_out tkeep_action'>Break Out</button>
-        <button class='break_in tkeep_action'>Break In</button>
-        <button class='time_out tkeep_action'>Time Out</button>
+        <button class='time_in tkeep_action' disabled>Time In</button>
+        <button class='break_out tkeep_action' disabled>Break Out</button>
+        <button class='break_in tkeep_action' disabled>Break In</button>
+        <button class='time_out tkeep_action' disabled>Time Out</button>
     </div>
 
 
