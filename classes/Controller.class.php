@@ -290,8 +290,23 @@ class  Controller extends Model
         }
     }
 
+    /** Leave actions here*/
 
+    public function insertLeaveRequest()
+    {
+        if(!isset($_SESSION)){
+            session_start();
+        }
+        
+        $leaveType = htmlspecialchars($_POST['leave-type']);
+        $startRequest = htmlspecialchars($_POST['start-request']);
+        $endRequest = htmlspecialchars($_POST['end-request']);
+        $reason = htmlspecialchars($_POST['reason']);
 
+        $userLogin = $_SESSION['login-details']['user-email'];
+
+        $this->dbInsertLeaveRequest($leaveType,$startRequest,$endRequest,$reason,$userLogin);
+    }
 
 
 

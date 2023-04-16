@@ -59,4 +59,18 @@ class Model extends Dbh
 
         return $result;
     }
+
+    /**db leave will start here */
+
+    protected function dbInsertLeaveRequest($leaveType,$startRequest,$endRequest,$reason,$userLogin)
+    {
+        $sql = "INSERT INTO leave_history (`email`,`leave_type`,`start_request`,`end_request`,`leave_reason`) VALUES (?,?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        
+        if(!$stmt->execute([$userLogin,$leaveType,$startRequest,$endRequest,$reason])){
+            exit(json_encode('Error data'));
+        } else {
+            exit(json_encode('success'));
+        }
+    }
 }
