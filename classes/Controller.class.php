@@ -214,17 +214,80 @@ class  Controller extends Model
         
     }
 
+    // insert action request by user to database
+    // this will be used for admin reports
     public function addActionHistory($actionRequest)
     {
         if(!isset($_SESSION)){
             session_start();
         }
 
+        // getting current active user
         $email = $_SESSION['login-details']['user-email'];
+
+        // action made by user
         $actionData = htmlspecialchars($actionRequest);
 
-        $this->tkeep_history($email,$actionData);
-        exit(json_encode($this->getLastTkeepAction($email)));
+        // getting last action made by user to database
+        $lastAction = $this->getLastTkeepAction($email);
+        
+        // initial validation for submitted action
+        if($lastAction['action_data'] == $actionData){
+            exit(json_encode('No data')); // send err resp if modified action is sent
+        } else {
+            // another validation for further security
+            $this->tkeep_actionValidation($email,$actionData,$lastAction['action_data']);
+        }
+    }
+
+    //action validation to check if requested action is modified
+    private function tkeep_actionValidation($email,$actionData,$lastAction)
+    {
+        //array of action saved and reference
+        $arrayAction = ['time_in','break_out','break_in','time_out'];
+
+        //check if requested action is in reference or valid
+        if(in_array($actionData,$arrayAction)){
+            // validation for lastaction
+            if($lastAction == $arrayAction[0]){ // time_in value check
+                // value sent by user should be 'break_out' or 'time_out'
+                if($actionData != $arrayAction[1] || $actionData != $arrayAction[3]){
+                    exit(json_encode('No data')); // err response if modified
+                } else {
+                    // if valid request add action to database
+                    $this->tkeep_history($email,$actionData);
+                    exit(json_encode($lastAction));
+                }
+            }elseif($lastAction == $arrayAction[1]){ // break_out value check
+                // value sent by user should be 'break_in' or 'time_out'
+                if($actionData != $arrayAction[2] || $actionData != $arrayAction[3]){
+                    exit(json_encode('No data'));
+                } else {
+                    $this->tkeep_history($email,$actionData);
+                    exit(json_encode($lastAction));    
+                }
+            }elseif($lastAction == $arrayAction[2]){ //break_in value check
+                // value sent by user should be 'time_out'
+                if($actionData != $arrayAction[3]){
+                    exit(json_encode('No data'));
+                } else { 
+                    $this->tkeep_history($email,$actionData);
+                    exit(json_encode($lastAction));    
+                }
+            } else { // time_out value check
+                // check if requested action is modified
+                // requested action should not be equal to 'time_out'
+                if($actionData == $arrayAction[3]){
+                    exit(json_encode('No data'));
+                }else {
+                    $this->tkeep_history($email,$actionData);
+                    exit(json_encode($lastAction));    
+                }
+            }
+        }else {
+            // err response if requested action is modified and not a valid request
+            exit(json_encode('No data'));
+        }
     }
 
 

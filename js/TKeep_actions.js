@@ -30,7 +30,7 @@ class TKeep_actions {
                 url: "./includes/getLastAction.inc.php",
                 success: function(data){
                     const filterData = data.replace(/"/g,""); 
-                        console.log(filterData);
+                        console.log(filterData); // For checking of last action delete after solving the logic
                     const tkeep_actions = $('.tkeep_action');
 
                     tkeep_actions.each(function(index,element){
@@ -81,7 +81,16 @@ class TKeep_actions {
                     'button-action': btn_action
                 },
                 success: function(data){
-                    location.href = "";
+                    const filterData = data.replace(/"/g,""); 
+                    
+                    if(filterData == "No data"){
+                        alert("Error processing your request please try again later");
+                        location.href = "";
+                    } else {
+                        const message1 = filterData + " processed time " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+                        alert(message1);
+                        location.href = "";
+                    }
                 }
             }
         );
