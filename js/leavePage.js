@@ -3,5 +3,7 @@ $(document).ready(function(){
     $("#leave_submit").on('click',() => {
         // leaveActions.insertLeaveRequest();
         leaveActions.leaveValidation();
-    })
+    });
+
+    leaveActions.onLoadLeaveDetails();
 })

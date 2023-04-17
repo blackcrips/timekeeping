@@ -54,4 +54,25 @@ class LeaveActions {
     {
         $('.alert').css('top','-100%');
     }
+
+    onLoadLeaveDetails()
+    {
+        $.ajax(
+            {
+                url: "./includes/getLeaveDetails.inc.php",
+                method: "POST",
+                data: {
+                    'request-data': "request-data"
+                },
+                success: function(data){
+                    let parseData = JSON.parse(data);
+                    $('#example').DataTable({
+                        ajax: data
+                    });
+
+                    console.log(parseData)
+                }
+            }
+        );
+    }
 }

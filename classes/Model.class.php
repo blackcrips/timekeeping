@@ -73,4 +73,33 @@ class Model extends Dbh
             exit(json_encode('success'));
         }
     }
+
+    protected function dbGetLeaveDetails($email)
+    {
+        $sql = "SELECT * FROM leave_history WHERE email = ? ORDER BY added_at DESC";
+        $stmt = $this->connect()->prepare($sql);
+
+        if(!$stmt->execute([$email])){
+            exit(0);
+            die();
+        } else {
+
+            $results = $stmt->fetchAll();
+
+            $arrayTemplate = array(
+                "data" => []
+            );
+
+            for($i = 0; $i < count($results);$i++){
+                $pushArray = [];
+                foreach($results[$i] as $result){
+                    array_push($pushArray,$result);
+                }
+                array_push($arrayTemplate,$pushArray);
+            }
+
+
+            exit(json_encode($arrayTemplate));
+        }
+    }
 }
