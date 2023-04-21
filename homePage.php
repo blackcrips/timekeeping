@@ -5,7 +5,6 @@ date_default_timezone_set('Asia/Manila');
 $controller = new Controller();
 $controller->redirectForeignUser();
 
-
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +19,7 @@ $controller->redirectForeignUser();
     <a href="leavePage.php">File Leave</a>
     <br>
     <br>
+    <a href="timestamp.php">My timestamp</a>
     <div class="container_actions">
         <button class='time_in tkeep_action' disabled>Time In</button>
         <button class='break_out tkeep_action' disabled>Break Out</button>

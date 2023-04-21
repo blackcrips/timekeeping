@@ -9,6 +9,17 @@ class View extends Model {
 
         $email = $_SESSION['login-details']['user-email'];
 
-        $this->dbGetLeaveDetails($email);
+        return $this->dbGetLeaveDetails($email);
+    }
+
+    public function viewMyTimestamp()
+    {
+        if(!isset($_SESSION)){
+            session_start();
+        }
+
+        $email = $_SESSION['login-details']['user-email'];
+
+        return $this->dbViewMyTimestamp($email);
     }
 }

@@ -4,4 +4,4 @@ include_once('./autoLoadClasses.inc.php');
 
 $controller = new Controller();
 $controller->redirectForeignUser();
-$controller->fetchLastTkeepAction();
+$controller->fetchLast_tKeepAction();

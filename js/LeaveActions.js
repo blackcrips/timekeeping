@@ -1,23 +1,16 @@
 class LeaveActions {
     insertLeaveRequest()
     {
-        
-        $('#start_request').val();
-        $('#end_request').val();
-        $('#reason').val();
-
         $.ajax(
             {
                 url: "./includes/insertLeaveRequest.inc.php",
                 method: "POST",
                 data: {
+                    // sending input leave details to database
                     "leave-type": $('#leave_options').val(),
                     "start-request": $('#start_request').val(),
                     "end-request": $('#end_request').val(),
                     "reason": $('#reason').val()
-                },
-                success: function(data){
-                    console.log(data);
                 }
             }
         );
@@ -25,6 +18,7 @@ class LeaveActions {
 
     leaveValidation()
     {
+        //checking for empty input fields
         let countValue = 0;
         $('[data-impLeaveData]').each(function(){
             if($(this).val() == ""){
@@ -39,40 +33,43 @@ class LeaveActions {
 
         let leaveActions = new LeaveActions();
 
+        // validation if all fields are not empty
         if(countValue == 4){
+            //insert information to database
             leaveActions.insertLeaveRequest();
+            alert('Record added');
+            location.href = "";
+
         }else {
-            $('.alert').css('top','0');
-            $('.alert').html('Please fill up all fields');
-            $('.alert').attr('class','alert alert-warning');
+
+            // return feedback for empty fields
+            leaveActions.alertSettings('Please fill up all fields','warning')
 
             setTimeout(leaveActions.alertTimeOut,3000);
         }
     }
 
+    // creating dynamic alert message
+    alertSettings(messageAlert,alertType)
+    {
+        let leaveActions = new LeaveActions();
+        $('.alert').css('top','0');
+        $('.alert').html(messageAlert);
+        $('.alert').attr('class','alert alert-' + alertType);
+
+        setTimeout(leaveActions.alertTimeOut,3000);
+    }
+
+    //dynamic timeout alert
+    //reusable function that will depends on scenario
     alertTimeOut()
     {
         $('.alert').css('top','-100%');
     }
 
+    //onload jquery datatable format and design
     onLoadLeaveDetails()
     {
-        $.ajax(
-            {
-                url: "./includes/getLeaveDetails.inc.php",
-                method: "POST",
-                data: {
-                    'request-data': "request-data"
-                },
-                success: function(data){
-                    let parseData = JSON.parse(data);
-                    $('#example').DataTable({
-                        ajax: data
-                    });
-
-                    console.log(parseData)
-                }
-            }
-        );
+        $('#tbl_leaveDetails').DataTable();
     }
 }

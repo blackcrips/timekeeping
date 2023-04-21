@@ -29,20 +29,21 @@ class TKeep_actions {
             {
                 url: "./includes/getLastAction.inc.php",
                 success: function(data){
+                    let selfCall = new TKeep_actions();
+                    const btn_tKeepActions = $('.tkeep_action');
                     const filterData = data.replace(/"/g,""); 
-                        console.log(filterData); // For checking of last action delete after solving the logic
-                    const tkeep_actions = $('.tkeep_action');
 
-                    tkeep_actions.each(function(index,element){
-                        let buttonClassName = $(this).attr('class').split(" ");
-
-                        if(buttonClassName[0] == filterData){
-                            let selfCall = new TKeep_actions();
-                            selfCall.setActiveButtonActions(index,tkeep_actions);
-                        }
-                    });
-
-
+                    if(filterData == 'No data'){
+                        selfCall.setActiveButtonActions(3,btn_tKeepActions);
+                    } else {
+                        btn_tKeepActions.each(function(index,element){
+                            let buttonClassName = $(this).attr('class').split(" ");
+                            
+                            if(buttonClassName[0] == filterData){
+                                selfCall.setActiveButtonActions(index,btn_tKeepActions);
+                            }
+                        });
+                    }
                 }
             }
         )
@@ -51,24 +52,24 @@ class TKeep_actions {
     setActiveButtonActions(index,buttons)
     {
         buttons.each(function(index2,element){
-            if(index == 0) {
-                if(index < index2){
+            if(index == 0){
+                if(index == index2){
                     $(this).prop('disabled',false);
-                    $('.break_in').prop('disabled',true);
                 }
-            }else if(index == 1){
-                if(index == index2){
-                    $('.break_in').prop('disabled',false);
-                    $('.time_out').prop('disabled',false);
+            } else if(index == 1){
+                if(index2 == 1 || index2 == 3){
+                    $(this).prop('disabled',false);
                 }
-            }else if (index == 2){
-                if(index == index2){
-                    $('.time_out').prop('disabled',false);
+            } else if(index == 2){
+                if(index2 == 2 || index2 == 3){
+                    $(this).prop('disabled',false);
                 }
-            } else {
-                $(this).prop('disabled',false);
+            } else{
+                if(index2 == 3){
+                    $(this).prop('disabled',false);
+                }
             }
-        })
+        });
     }
 
     timekeepingAction(btn_action)
@@ -83,14 +84,15 @@ class TKeep_actions {
                 success: function(data){
                     const filterData = data.replace(/"/g,""); 
                     
-                    if(filterData == "No data"){
-                        alert("Error processing your request please try again later");
-                        location.href = "";
-                    } else {
-                        const message1 = filterData + " processed time " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
-                        alert(message1);
-                        location.href = "";
-                    }
+                    // if(filterData == "No data"){
+                        console.log(data);
+                    //     alert("Error processing your request please try again later");
+                    //     location.href = "";
+                    // } else {
+                    //     const message1 = filterData + " processed time " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+                    //     alert(message1);
+                    //     location.href = "";
+                    // }
                 }
             }
         );

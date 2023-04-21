@@ -195,7 +195,7 @@ class  Controller extends Model
 
     }
 
-    public function fetchLastTkeepAction()
+    public function fetchLast_tKeepAction()
     {
         if(!isset($_SESSION)){
             session_start();
@@ -203,12 +203,12 @@ class  Controller extends Model
 
         $userLogin = $_SESSION['login-details']['user-email'];
 
-        $lastAction = $this->getLastTkeepAction($userLogin);
+        $lastAction = $this->dbGetLast_tKeepAction($userLogin);
 
-        if($lastAction['action_data'] == '' || is_null($lastAction['action_data']) == 1){
+        if($lastAction == '' || is_null($lastAction) == 1){
             exit(json_encode('No data'));
         } else {
-            exit(json_encode($lastAction['action_data']));
+            exit(json_encode($lastAction));
         }
 
         
@@ -217,6 +217,7 @@ class  Controller extends Model
     // insert action request by user to database
     // this will be used for admin reports
     public function addActionHistory($actionRequest)
+    // public function addActionHistory()
     {
         if(!isset($_SESSION)){
             session_start();
@@ -225,19 +226,21 @@ class  Controller extends Model
         // getting current active user
         $email = $_SESSION['login-details']['user-email'];
 
-        // action made by user
+        // // action made by user
         $actionData = htmlspecialchars($actionRequest);
 
-        // getting last action made by user to database
-        $lastAction = $this->getLastTkeepAction($email);
+        // // getting last action made by user to database
+        $lastAction = $this->dbGetLast_tKeepAction($email);
         
         // initial validation for submitted action
-        if($lastAction['action_data'] == $actionData){
+        if($lastAction != $actionData){
             exit(json_encode('No data')); // send err resp if modified action is sent
         } else {
             // another validation for further security
-            $this->tkeep_actionValidation($email,$actionData,$lastAction['action_data']);
+            $this->tkeep_actionValidation($email,$actionData,$lastAction);
         }
+
+            // var_dump($lastAction);
     }
 
     //action validation to check if requested action is modified
@@ -250,38 +253,38 @@ class  Controller extends Model
         if(in_array($actionData,$arrayAction)){
             // validation for lastaction
             if($lastAction == $arrayAction[0]){ // time_in value check
-                // value sent by user should be 'break_out' or 'time_out'
-                if($actionData != $arrayAction[1] || $actionData != $arrayAction[3]){
+                // value sent by user should be 'time_in'
+                if($actionData != $arrayAction[0]){
                     exit(json_encode('No data')); // err response if modified
                 } else {
                     // if valid request add action to database
-                    $this->tkeep_history($email,$actionData);
+                    $this->dbInsert_tKeepHistory($email,$actionData);
                     exit(json_encode($lastAction));
                 }
             }elseif($lastAction == $arrayAction[1]){ // break_out value check
                 // value sent by user should be 'break_in' or 'time_out'
-                if($actionData != $arrayAction[2] || $actionData != $arrayAction[3]){
+                if($actionData != $arrayAction[1] || $actionData != $arrayAction[3]){
                     exit(json_encode('No data'));
                 } else {
-                    $this->tkeep_history($email,$actionData);
+                    $this->dbInsert_tKeepHistory($email,$actionData);
                     exit(json_encode($lastAction));    
                 }
             }elseif($lastAction == $arrayAction[2]){ //break_in value check
                 // value sent by user should be 'time_out'
-                if($actionData != $arrayAction[3]){
-                    exit(json_encode('No data'));
-                } else { 
-                    $this->tkeep_history($email,$actionData);
+                if($actionData == $arrayAction[2] || $actionData == $arrayAction[3]){
+                    $this->dbInsert_tKeepHistory($email,$actionData);
                     exit(json_encode($lastAction));    
+                } else { 
+                    exit(json_encode('No data'));
                 }
             } else { // time_out value check
                 // check if requested action is modified
                 // requested action should not be equal to 'time_out'
-                if($actionData == $arrayAction[3]){
+                if($actionData != $arrayAction[3]){
                     exit(json_encode('No data'));
                 }else {
-                    $this->tkeep_history($email,$actionData);
-                    exit(json_encode($lastAction));    
+                    $this->dbInsert_tKeepHistory($email,$actionData);
+                    // exit(json_encode($lastAction));    
                 }
             }
         }else {
