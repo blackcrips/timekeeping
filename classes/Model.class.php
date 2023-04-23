@@ -44,18 +44,22 @@ class Model extends Dbh
     protected function dbInsert_tKeepHistory($email,$columnName)
     {
         $id = $this->dbGet_tKeepHistoryId($email);
-        date_default_timezone_set("Asia/Manila");
-        $currentTime = date("h:i:sa");
-
-        $sql1 = "UPDATE tkeep_history SET ";
-        $sql2 = ` = {$currentTime} WHERE email = ?`;
-
-        $sql = "UPDATE tkeep_history SET $columnName = ? WHERE email = ? AND id = ?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$currentTime,$email,$id['id']]);
+        
+        if(!$this->dbCheck_ifEmptyTkeepHistory($id['id'],$email)){
+            return "No data";
+        } else {
+            $id2 = $this->dbGet_tKeepHistoryId($email);
+            date_default_timezone_set("Asia/Manila");
+            $currentTime = date("Y-m-d h:i:sa");
+    
+            $sql1 = "UPDATE tkeep_history SET ";
+            $sql2 = ` = {$currentTime} WHERE email = ?`;
+    
+            $sql = "UPDATE tkeep_history SET $columnName = ? WHERE email = ? AND id = ?";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$currentTime,$email,$id2['id']]);
+        }
     }
-
-
 
     private function dbGet_tKeepHistoryId($email){
         $sql = "SELECT id FROM tkeep_history WHERE email = ? ORDER BY id DESC";
@@ -63,6 +67,57 @@ class Model extends Dbh
         $stmt->execute([$email]);
 
         return $result = $stmt->fetch();
+    }
+
+    private function dbCheck_ifEmptyTkeepHistory($id,$email)
+    {
+        $sql = "SELECT time_in,break_out,break_in,time_out FROM tkeep_history WHERE id = ? AND email = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id,$email]);
+
+        $result = $stmt->fetch();
+        $historyCount = 0;
+
+        foreach($result as $value){
+            if($value != ""){
+                $historyCount++;
+            } else {
+                return true;
+            }
+        }
+
+        return $this->dbCreate_tKeepHistoryAction($email);
+    }
+
+    private function dbCreate_tKeepHistoryAction($email)
+    { 
+        if($this->dbCheck_tkeepDualLogin($email)){
+            exit(json_encode('dual action'));
+        } else {
+            date_default_timezone_set("Asia/Manila");
+            $dateTime = date("Y-m-d");
+            $sql = "INSERT INTO tkeep_history (`email`,`date`) VALUES (?,?)";
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([$email,$dateTime]);
+
+            return $this->dbGet_tKeepHistoryId($email);
+        }
+
+        
+    }
+
+    private function dbCheck_tkeepDualLogin($email)
+    {
+        $tkeepDate = $this->dbCheckLast_tKeepHistory($email);
+        $dateToday = date("Y-m-d");
+
+        if($tkeepDate['date'] == $dateToday){
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     protected function dbGetLast_tKeepAction($email)

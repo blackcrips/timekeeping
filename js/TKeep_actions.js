@@ -84,15 +84,17 @@ class TKeep_actions {
                 success: function(data){
                     const filterData = data.replace(/"/g,""); 
                     
-                    // if(filterData == "No data"){
-                        console.log(data);
-                    //     alert("Error processing your request please try again later");
-                    //     location.href = "";
-                    // } else {
-                    //     const message1 = filterData + " processed time " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
-                    //     alert(message1);
-                    //     location.href = "";
-                    // }
+                    if(filterData == "No data"){
+                        alert("Error processing your request please try again later");
+                        location.href = "";
+                    }else if(filterData == 'dual action'){
+                        alert('Error processing your request. Please contact your immediate head if action is needed.');
+                        location.href = "";
+                    } else {
+                        const message1 = filterData + " processed time " + new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+                        alert(message1);
+                        location.href = "";
+                    }
                 }
             }
         );
