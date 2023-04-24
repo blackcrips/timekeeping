@@ -14,8 +14,7 @@ $view = new View();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <title>Leave Page</title>
 </head>
 
@@ -59,7 +58,7 @@ $view = new View();
         <button class="btn btn-danger" id="leave_cancel">Back</button>
     </div>
     <div class="container_leaveDetails">
-        <table id="tbl_leaveDetails" class="table table-bordered table-striped table-hover" display style="width:100%">
+        <table id="tbl_leaveDetails" class="hover compact" display style="width:100%">
             <thead>
                 <tr>
                     <th>Leave type</th>
@@ -90,8 +89,7 @@ $view = new View();
     
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="./js/LeaveActions.js"></script>
     <script src="./js/leavePage.js"></script>
 </body>

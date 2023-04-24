@@ -192,8 +192,18 @@ class Model extends Dbh
         }
     }
     
-    protected function dbViewMyTimestamp($email)
+    protected function dbGetTimestamp($email)
     {
-    //  $sql = "SELECT"   
+        $sql = "SELECT date,time_in,break_out,break_in,time_out,remarks FROM tkeep_history WHERE email = ?";   
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$email]);
+
+        $arrayTemplate = [];
+
+        foreach($stmt->fetchAll() as $value){
+            array_push($arrayTemplate,$value);
+        };
+
+        return $arrayTemplate;
     }
 }
