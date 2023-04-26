@@ -31,9 +31,5 @@ date_default_timezone_set('Asia/Manila');
                 </div>
             </div>
         </div>
-        <!-- <div class="ph_greet">
-            <div> Good afternoon </div>
-            <div class='nthGreet'> jimmy! </div>
-        </div> -->
     </div>
 
